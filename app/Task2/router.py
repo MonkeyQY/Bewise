@@ -1,14 +1,14 @@
 import logging
 from io import BytesIO
-from typing import Iterator
+from typing import Iterator, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from starlette.responses import StreamingResponse
 
 from app.Task2 import config
 from app.Task2.depends import valid_token
-from app.Task2.schemas import AudioResponse, ResponseUser, CreateUser, RequestAddAudio
+from app.Task2.schemas import AudioResponse, ResponseUser, CreateUser
 from app.Task2.utils import (
     convert_file_from_wav_to_mp3,
     save_audio,
@@ -38,10 +38,10 @@ async def check_valid_type_audio(file: UploadFile) -> None:
 
 @router.post(config.add_audio_path, response_model=AudioResponse)
 async def add_audio(
-        # user_id: str = Form(...),
-        # api_token: str = Form(...),
-        audio: UploadFile = File(...),
-        user_id: UUID = Depends(valid_token)
+    # user_id: str = Form(...),
+    # api_token: str = Form(...),
+    audio: UploadFile = File(...),
+    user_id: UUID = Depends(valid_token),
 ) -> AudioResponse:
     log.info("Add audio : %s", user_id)
 
@@ -55,7 +55,7 @@ async def add_audio(
 
 @router.get(config.record_path, response_class=StreamingResponse)
 async def record_audio(user_id: str, audio_id: str) -> StreamingResponse:
-    audio_file: BytesIO = await get_audio(audio_id)
+    audio_file: Optional[BytesIO] = await get_audio(audio_id)
 
     if audio_file is None:
         raise HTTPException(status_code=404, detail="Audio not found")

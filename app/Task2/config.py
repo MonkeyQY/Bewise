@@ -24,7 +24,9 @@ record_path = os.environ.get("RECORD_PATH", "/record")
 
 
 def get_audio_url(user_id: UUID, audio_id: UUID) -> str:
-    return f"{audio_url}{prefix_task2}{record_path}?user_id={user_id}&audio_id={audio_id}"
+    return (
+        f"{audio_url}{prefix_task2}{record_path}?user_id={user_id}&audio_id={audio_id}"
+    )
 
 
 add_audio_path = os.environ.get("ADD_AUDIO_PATH", "/add_audio")

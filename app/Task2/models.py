@@ -12,11 +12,15 @@ Base = declarative_base(metadata=metadata)
 
 class User(Base):
     __tablename__ = "user"
-    id = Column(UUID(as_uuid=True), default=uuid.uuid4, index=True, primary_key=True, unique=True)
-    name = Column(String, nullable=False)
-    api_token = Column(
-        UUID(as_uuid=True), default=uuid.uuid4, index=True
+    id = Column(
+        UUID(as_uuid=True),
+        default=uuid.uuid4,
+        index=True,
+        primary_key=True,
+        unique=True,
     )
+    name = Column(String, nullable=False)
+    api_token = Column(UUID(as_uuid=True), default=uuid.uuid4, index=True)
 
 
 class Audio(Base):

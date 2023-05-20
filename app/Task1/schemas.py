@@ -30,7 +30,6 @@ class Question(BaseModel):
     category: Category
 
 
-
 class QuestionModelDB(BaseModel):
     id: int
     answer: str
