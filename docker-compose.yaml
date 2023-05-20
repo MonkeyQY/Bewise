@@ -1,0 +1,105 @@
+version: '3'
+
+services:
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 127.0.0.1:9000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: always
+
+  loki:
+    image: grafana/loki
+    container_name: loki
+    command: -config.file=/mnt/config/loki-config.yml
+    ports:
+      - 3100:3100
+    volumes:
+      - ./data/Loki/loki-config.yml:/mnt/config/loki-config.yml
+      - loki-data:/loki
+    restart: always
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prom
+    ports:
+      - 9090:9090
+    volumes:
+      - ./data/prometheus:/etc/prometheus
+      - prom-data:/prometheus
+    restart: always
+
+  bewise:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    #    command: bash -c "alembic upgrade head && python3 -m app"
+    command: [ "uvicorn", "__main__:app", "--host", "0.0.0.0", "--port", "8080" ]
+    env_file:
+      - .env
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://127.0.0.1:3100/loki/api/v1/push"
+
+  worker:
+    build: .
+    restart: always
+    command: celery -A app.celery_app:app_celery worker -l info --autoscale 1,4 --prefetch-multiplier 128
+    env_file:
+      - .env
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://127.0.0.1:3100/loki/api/v1/push"
+    depends_on:
+      - collection
+      - redis
+    deploy:
+      mode: replicated
+      replicas: 2
+
+  dashboard:
+    build: ./source/data_collection_wb
+    command: celery -A app.celery_app:app_celery flower --port=5555
+    env_file:
+      - ./source/data_collection_wb/.env
+    ports:
+      - 5555:5555
+    depends_on:
+      - collection
+      - redis
+
+  redis:
+    image: redis:latest
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    volumes:
+      - ./data/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres
+    env_file:
+      - ./.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  prom-data:
+  grafana-data:
+  loki-data:
+  conf:
+  pgdata:

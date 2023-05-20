@@ -1,0 +1,34 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.pyright]
+include = ["app"]
+exclude = [
+    "**/__pycache__",
+]
+#ignore = ["app/oldstuff"]
+defineConstant = { DEBUG = true }
+stubPath = "src/stubs"
+venv = "venv"
+
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+pythonVersion = "3.11"
+pythonPlatform = "MacOS"
