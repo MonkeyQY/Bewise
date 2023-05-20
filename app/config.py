@@ -10,7 +10,3 @@ host = os.getenv("HOST", "localhost")
 port = int(os.getenv("PORT", 8080))
 
 reload = os.getenv("RELOAD", "True") == "True"
-
-REDIS_HOST = os.environ.get("REDIS_HOST", "redis")
-REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
-

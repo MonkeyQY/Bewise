@@ -4,8 +4,11 @@ import uvicorn
 from fastapi import FastAPI
 
 from app import config
-from app.Task1.router import router as router_Task1
-from app.Task2.router import router as router_Task2
+from app.Task1.config import prefix_task1
+from app.Task1.router import router as router_task1
+from app.Task2.config import prefix_task2
+from app.Task2.router import router as router_task2
+from app.Task1.models import Base
 
 app = FastAPI(
     title="Bewise",
@@ -16,14 +19,14 @@ app = FastAPI(
 )
 
 app.include_router(
-    router_Task1,
-    prefix="/task1",
+    router_task1,
+    prefix=prefix_task1,
     tags=["Task1"],
 )
 
 app.include_router(
-    router_Task2,
-    prefix="/task2",
+    router_task2,
+    prefix=prefix_task2,
     tags=["Task2"],
 )
 

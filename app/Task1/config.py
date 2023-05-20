@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 DATABASE_Task1 = {
     "drivername": "postgresql+psycopg2",
     "host": os.environ.get("DB_HOST", "localhost"),
@@ -13,3 +12,15 @@ DATABASE_Task1 = {
     "password": os.environ.get("DB_PASS", "postgres"),
     "database": os.environ.get("POSTGRES_DB", "Task1"),
 }
+
+get_question_num_path = os.environ.get("GET_QUESTION_NUM_URL", "/get_question_num")
+
+random_question_url = os.environ.get(
+    "RANDOM_QUESTION_URL", "https://jservice.io/api/random?count="
+)
+
+prefix_task1 = os.environ.get("PREFIX_TASK1", "/task1")
+
+
+def get_question_url(count: int) -> str:
+    return random_question_url + str(count)
