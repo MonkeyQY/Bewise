@@ -17,8 +17,7 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.t
 FROM python:3.11-slim
 
 RUN apt-get update && \
-    apt-get install -y libpq-dev && \
-    apt-get install ffmpeg
+    apt-get install -y libpq-dev ffmpeg
 
 
 COPY --from=builder /app/wheels /wheels
