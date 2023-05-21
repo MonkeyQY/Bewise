@@ -8,7 +8,7 @@ from app.Task1.config import prefix_task1
 from app.Task1.router import router as router_task1
 from app.Task2.config import prefix_task2
 from app.Task2.router import router as router_task2
-from app.Task1.models import Base
+
 
 app = FastAPI(
     title="Bewise",
