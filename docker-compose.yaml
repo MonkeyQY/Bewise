@@ -97,7 +97,7 @@ services:
       - VIRTUAL_HOST=${DOMAINS}
       - VIRTUAL_PORT=8080
       - LETSENCRYPT_HOST=${DOMAINS}
-      - LETSENCRYPT_EMAIL=${EMAIL}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
       - VIRTUAL_PATH=/
     logging:
       driver: loki
