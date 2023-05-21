@@ -29,7 +29,5 @@ COPY requirements.txt .
 RUN pip install --no-cache /wheels/*
 
 COPY app app
-COPY alembic alembic
-COPY alembic.ini alembic.ini
 
 CMD ["uvicorn", "__main__:app", "--host", "0.0.0.0", "--port", "8080"]
