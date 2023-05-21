@@ -51,7 +51,7 @@ class Questions:
                 question.created_at = None
                 if question not in self.questions:
                     self.questions.append(QuestionDB(**question.dict()))
-                continue
+                    continue
 
             self.count_exist_questions += 1
 
