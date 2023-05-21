@@ -20,6 +20,10 @@ curl https://raw.githubusercontent.com/jwilder/nginx-proxy/master/nginx.tmpl > n
 # 3. Install Loki Docker driver plugin
 docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
 
+
+docker compose build bewise
+
+
 # 4. Start proxy
 docker compose up -d
 

@@ -10,3 +10,5 @@ host = os.getenv("HOST", "localhost")
 port = int(os.getenv("PORT", 8080))
 
 reload = os.getenv("RELOAD", "True") == "True"
+
+prefix = os.getenv("PREFIX", "/bewise")

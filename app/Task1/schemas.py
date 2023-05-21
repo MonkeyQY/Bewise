@@ -20,7 +20,7 @@ class Question(BaseModel):
     id: int
     answer: str
     question: str
-    value: int
+    value: Optional[int]
     airdate: str
     created_at: str
     updated_at: str

@@ -13,7 +13,7 @@ DATABASE_Task2 = {
     "port": os.environ.get("DB_PORT", "5432"),
     "username": os.environ.get("DB_USER", "postgres"),
     "password": os.environ.get("DB_PASS", "postgres"),
-    "database": os.environ.get("POSTGRES_DB", "Task2"),
+    "database": os.environ.get("POSTGRES_DB_Task2", "Task2"),
 }
 
 audio_url = os.environ.get("AUDIO_URL", f"http://localhost:{config.port}")

@@ -14,6 +14,7 @@ from app.Task2.utils import (
     save_audio,
     add_user,
     get_audio,
+    check_valid_type_audio,
 )
 
 router = APIRouter()
@@ -30,16 +31,8 @@ async def create_user(new_user: CreateUser) -> ResponseUser:
     return ResponseUser(id=user_id, api_token=api_token)
 
 
-async def check_valid_type_audio(file: UploadFile) -> None:
-    if file.content_type != "audio/wav":
-        raise HTTPException(status_code=400, detail="Invalid audio type")
-    return None
-
-
 @router.post(config.add_audio_path, response_model=AudioResponse)
 async def add_audio(
-    # user_id: str = Form(...),
-    # api_token: str = Form(...),
     audio: UploadFile = File(...),
     user_id: UUID = Depends(valid_token),
 ) -> AudioResponse:
@@ -47,17 +40,20 @@ async def add_audio(
 
     await check_valid_type_audio(audio)
     mp3_audio = await convert_file_from_wav_to_mp3(audio)
+    log.info("Audio convert to mp3")
 
     audio_id = await save_audio(user_id, mp3_audio)
-
+    log.info("Audio save, id: %s", audio_id)
     return AudioResponse(url=config.get_audio_url(user_id, audio_id))
 
 
 @router.get(config.record_path, response_class=StreamingResponse)
 async def record_audio(user_id: str, audio_id: str) -> StreamingResponse:
+    log.info("Get audio: %s for user : %s", audio_id, user_id)
     audio_file: Optional[BytesIO] = await get_audio(audio_id)
 
     if audio_file is None:
+        log.info("Audio not found")
         raise HTTPException(status_code=404, detail="Audio not found")
 
     def generate() -> Iterator[bytes]:

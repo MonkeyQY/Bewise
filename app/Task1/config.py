@@ -10,10 +10,10 @@ DATABASE_Task1 = {
     "port": os.environ.get("DB_PORT", "5432"),
     "username": os.environ.get("DB_USER", "postgres"),
     "password": os.environ.get("DB_PASS", "postgres"),
-    "database": os.environ.get("POSTGRES_DB", "Task1"),
+    "database": os.environ.get("POSTGRES_DB_Task1", "Task1"),
 }
 
-get_question_num_path = os.environ.get("GET_QUESTION_NUM_URL", "/get_question_num")
+get_question_num_path = os.environ.get("GET_QUESTION_NUM_PATH", "/get_question_num")
 
 random_question_url = os.environ.get(
     "RANDOM_QUESTION_URL", "https://jservice.io/api/random?count="

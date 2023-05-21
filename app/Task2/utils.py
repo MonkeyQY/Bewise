@@ -1,12 +1,23 @@
+import logging
 from io import BytesIO
 from typing import Optional
 from uuid import UUID
 
+from fastapi import HTTPException
 from fastapi import UploadFile
 from pydub import AudioSegment
 
 from app.Task2.database import Session
 from app.Task2.models import Audio, User
+
+log = logging.getLogger("utils Task2")
+
+
+async def check_valid_type_audio(file: UploadFile) -> None:
+    if file.content_type != "audio/wav":
+        log.info("Invalid audio type")
+        raise HTTPException(status_code=400, detail="Invalid audio type")
+    return None
 
 
 async def convert_file_from_wav_to_mp3(audio: UploadFile) -> BytesIO:
@@ -16,7 +27,7 @@ async def convert_file_from_wav_to_mp3(audio: UploadFile) -> BytesIO:
     return memory
 
 
-async def save_audio(user_id: UUID, audio: BytesIO) -> Audio:
+async def save_audio(user_id: UUID, audio: BytesIO) -> UUID:
     audio_data = audio.read()
 
     with Session() as session:
