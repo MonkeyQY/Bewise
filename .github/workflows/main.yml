@@ -3,7 +3,7 @@ name: Black Formatting
 on:
   push:
     branches:
-      - main  # Замените на нужную ветку
+      - main
 
 jobs:
   build:
