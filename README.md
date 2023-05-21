@@ -1,5 +1,5 @@
-
-
+[![Black Formatting](https://github.com/MonkeyQY/Bewise/actions/workflows/main.yml/badge.svg)](https://github.com/MonkeyQY/Bewise/actions/workflows/main.yml)
+[![Flake8 Linting](https://github.com/MonkeyQY/Bewise/actions/workflows/flake8.yml/badge.svg)](https://github.com/MonkeyQY/Bewise/actions/workflows/flake8.yml)
 # Запуск проекта
 - Клонировать репозиторий 
 - Зайти в папку с проектом
