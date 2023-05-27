@@ -70,7 +70,7 @@ services:
     ports:
       - 3100:3100
     volumes:
-      - ./data/Loki/loki-config.yml:/mnt/config/loki-config.yml
+      - ./loki-config.yml:/mnt/config/loki-config.yml
       - loki-data:/loki
     restart: always
 
@@ -80,7 +80,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./data/prometheus:/etc/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prom-data:/prometheus
     restart: always
 
