@@ -43,7 +43,7 @@
 `
 
 ## Task2:
-### 1 enpoint
+### 1 endpoint
 Метод POST, content-type: application/json;
 
 `http://localhost:8000/task2/add_user`
@@ -69,7 +69,7 @@
     "url" : "http://localhost:8000/task2/record?user_id=user_id&audio_id=audio_id"
 }`
 
-### 3 enpoint
+### 3 endpoint
 Метод GET
 
 `http://localhost:8000/task2/record?user_id=user_id&audio_id=audio_id`
