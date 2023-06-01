@@ -1,5 +1,9 @@
 [![Black Formatting](https://github.com/MonkeyQY/Bewise/actions/workflows/main.yml/badge.svg)](https://github.com/MonkeyQY/Bewise/actions/workflows/main.yml)
 [![Flake8 Linting](https://github.com/MonkeyQY/Bewise/actions/workflows/flake8.yml/badge.svg)](https://github.com/MonkeyQY/Bewise/actions/workflows/flake8.yml)
+# Описание
+- Первая часть проекта - это решение, которое достаёт рандомные вопросы для викторины в указанном кол-ве и записывает в базу.
+- Вторая часть проекта - это решение, которое позволяет загружать аудио файлы формата wav, конвертирует их в mp3 и позволяет получить их поссылке.
+
 # Запуск проекта
 - Клонировать репозиторий 
 - Зайти в папку с проектом
