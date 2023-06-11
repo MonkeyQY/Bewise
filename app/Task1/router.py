@@ -18,10 +18,7 @@ async def get_count_questions(
     log.info("Get question num: %s", num)
 
     background_tasks.add_task(Questions.begin_receiving_questions, num.questions_num)
-    if num.questions_num == 1:
-        log.info("Get last question")
-        return QuestionsSchema(questions=[await Questions.get_last_question()])
 
-    last_questions = await Questions.get_questions(num.questions_num)
+    last_questions = await Questions.get_last_questions(num.questions_num)
     log.info("Get questions: %s", last_questions)
     return QuestionsSchema(questions=last_questions)

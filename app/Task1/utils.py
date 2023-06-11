@@ -68,22 +68,7 @@ class Questions:
         return question is not None
 
     @staticmethod
-    async def get_last_question() -> Optional[QuestionSchema]:
-        with Session() as session:
-            question = (
-                session.query(QuestionDB)
-                .order_by(desc(QuestionDB.created_at))
-                .limit(1)
-                .first()
-            )
-
-            if question is None:
-                return None
-
-            return QuestionSchema.parse_obj(question.__dict__)
-
-    @staticmethod
-    async def get_questions(count: int) -> Optional[List[QuestionSchema]]:
+    async def get_last_questions(count: int) -> Optional[List[QuestionSchema]]:
         with Session() as session:
             questions = (
                 session.query(QuestionDB)
