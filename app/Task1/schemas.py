@@ -16,18 +16,22 @@ class Category(BaseModel):
     clues_count: int
 
 
-class Question(BaseModel):
+class QuestionSchema(BaseModel):
     id: int
     answer: str
     question: str
     value: Optional[int]
     airdate: str
-    created_at: str
+    created_at: str | datetime
     updated_at: str
     category_id: int
     game_id: int
     invalid_count: Optional[int]
     category: Category
+
+
+class QuestionsSchema(BaseModel):
+    questions: Optional[list[QuestionSchema]]
 
 
 class QuestionModelDB(BaseModel):

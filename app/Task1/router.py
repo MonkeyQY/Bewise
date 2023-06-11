@@ -4,18 +4,25 @@ from typing import Optional
 from fastapi import APIRouter, BackgroundTasks
 
 from app.Task1 import config
-from app.Task1.schemas import QuestionNum, Question
-from app.Task1.utils import get_last_question, Questions
+from app.Task1.schemas import QuestionNum, QuestionSchema, QuestionsSchema
+from app.Task1.utils import Questions
 
 router = APIRouter()
 
 log = logging.getLogger("router Task1")
 
 
-@router.post(config.get_question_num_path, response_model=Optional[Question])
+@router.post(config.get_question_num_path, response_model=QuestionsSchema)
 async def get_count_questions(
     num: QuestionNum, background_tasks: BackgroundTasks
-) -> Optional[Question]:
+) -> QuestionsSchema:
     log.info("Get question num: %s", num)
+
     background_tasks.add_task(Questions.begin_receiving_questions, num.questions_num)
-    return await get_last_question()
+    if num.questions_num == 1:
+        log.info("Get last question")
+        return QuestionsSchema(questions=[await Questions.get_last_question()])
+
+    last_questions = await Questions.get_questions(num.questions_num)
+    log.info("Get questions: %s", last_questions)
+    return QuestionsSchema(questions=last_questions)

@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, LargeBinary, ForeignKey
+from sqlalchemy import Column, String, LargeBinary, ForeignKey, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base
 from sqlalchemy_utils import database_exists, create_database
@@ -21,6 +21,7 @@ class User(Base):
     )
     name = Column(String, nullable=False)
     api_token = Column(UUID(as_uuid=True), default=uuid.uuid4, index=True)
+    created_at = Column(DateTime, index=True, default=func.now())
 
 
 class Audio(Base):
