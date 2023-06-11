@@ -35,14 +35,14 @@ class Questions:
         self.count_exist_questions = 0
         async with ClientSession() as client:
             async with client.get(config.get_question_url(count)) as response:
-                await self._check_exist_received_questions(await response.json())
+                await self._check_exist_received_questions(await response.json(), session)
 
         if self.count_exist_questions > 0:
             await self._get_questions(self.count_exist_questions, session)
 
         return None
 
-    async def _check_exist_received_questions(self, questions: list) -> None:
+    async def _check_exist_received_questions(self, questions: list, session: Session) -> None:
         for question in questions:
             try:
                 question = QuestionSchema.parse_obj(question)
@@ -50,7 +50,7 @@ class Questions:
                 log.info("Question not valid , question: %s", question)
                 continue
 
-            if not await self._is_question_exist(question):
+            if not await self._is_question_exist(question, session):
                 question.created_at = None
                 if question not in self.questions:
                     self.questions.append(QuestionDB(**question.dict()))
@@ -64,7 +64,7 @@ class Questions:
 
     @staticmethod
     async def _is_question_exist(question: QuestionSchema, session: Session) -> bool:
-        question = session.query(QuestionDB.id).get(question.id)
+        question = session.query(QuestionDB).get(question.id)
         return question is not None
 
     @staticmethod
