@@ -1,10 +1,9 @@
 import logging
-from typing import Optional
 
 from fastapi import APIRouter, BackgroundTasks
 
 from app.Task1 import config
-from app.Task1.schemas import QuestionNum, QuestionSchema, QuestionsSchema
+from app.Task1.schemas import QuestionNum, QuestionsSchema
 from app.Task1.utils import Questions
 
 router = APIRouter()

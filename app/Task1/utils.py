@@ -95,4 +95,6 @@ class Questions:
             if questions is None:
                 return None
 
-            return [QuestionSchema.parse_obj(question.__dict__) for question in questions]
+            return [
+                QuestionSchema.parse_obj(question.__dict__) for question in questions
+            ]
