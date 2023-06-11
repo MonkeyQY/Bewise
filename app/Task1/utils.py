@@ -35,14 +35,18 @@ class Questions:
         self.count_exist_questions = 0
         async with ClientSession() as client:
             async with client.get(config.get_question_url(count)) as response:
-                await self._check_exist_received_questions(await response.json(), session)
+                await self._check_exist_received_questions(
+                    await response.json(), session
+                )
 
         if self.count_exist_questions > 0:
             await self._get_questions(self.count_exist_questions, session)
 
         return None
 
-    async def _check_exist_received_questions(self, questions: list, session: Session) -> None:
+    async def _check_exist_received_questions(
+        self, questions: list, session: Session
+    ) -> None:
         for question in questions:
             try:
                 question = QuestionSchema.parse_obj(question)
