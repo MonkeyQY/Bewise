@@ -1,7 +1,7 @@
 [![Black Formatting](https://github.com/MonkeyQY/Bewise/actions/workflows/main.yml/badge.svg)](https://github.com/MonkeyQY/Bewise/actions/workflows/main.yml)
 [![Flake8 Linting](https://github.com/MonkeyQY/Bewise/actions/workflows/flake8.yml/badge.svg)](https://github.com/MonkeyQY/Bewise/actions/workflows/flake8.yml)
 # Описание
-- Первая часть проекта - это решение, которое достаёт рандомные вопросы для викторины в указанном кол-ве и записывает в базу.
+- Первая часть проекта - это решение, которое достаёт рандомные вопросы для викторины в указанном кол-ве и записывает в базу, в ответ на запрос возвращает кол-во запрашиваемых вопросов.
 - Вторая часть проекта - это решение, которое позволяет загружать аудио файлы формата wav, конвертирует их в mp3 и позволяет получить их поссылке.
 
 # Запуск проекта
@@ -40,12 +40,38 @@
 
 `http://localhost:8000/task1/get_question_num`
 
-С параметрами 
+С параметрами:
 
 `{
-  "questions_num": 10,
+  "questions_num": 1,
 }
 `
+
+Ответ:
+
+`{
+  "questions": [
+    {
+      "id": 18663,
+      "answer": "Arabesque",
+      "question": "Meaning made or done in the Arabic fashion, this adjective is used in music, interior design & ballet",
+      "value": 400,
+      "airdate": "1990-05-18T19:00:00.000Z",
+      "created_at": "2023-06-11T17:28:29.159063",
+      "updated_at": "2022-12-30T18:45:16.026Z",
+      "category_id": 1577,
+      "game_id": 1689,
+      "invalid_count": null,
+      "category": {
+        "id": 1577,
+        "title": "in the dictionary",
+        "created_at": "2022-12-30T18:43:02.248Z",
+        "updated_at": "2022-12-30T18:43:02.248Z",
+        "clues_count": 135
+      }
+    }
+  ]
+}`
 
 ## Task2:
 ### 1 endpoint
@@ -53,16 +79,24 @@
 
 `http://localhost:8000/task2/add_user`
 
- С параметрами
+С параметрами:
 `{
   "name": "test",
 }`
+ 
+Ответ:
+
+`{
+    id: "UUID",
+    api_token: "UUID"
+}`
+
 ### 2 endpoint
 Метод POST, content-type: multipart/form-data;
 
 `http://localhost:8000/task2/add_audio?user_id=user_id&api_token=api_token`
 
-С параметрами 
+С параметрами:
 
 `{
     "audio": audio.wav
