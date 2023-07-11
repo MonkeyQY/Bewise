@@ -11,3 +11,8 @@ def valid_token(user_id: UUID, api_token: str) -> UUID:
         if UUID(api_token) == get_api_token(user_id, session):
             return user_id
     raise HTTPException(status_code=401, detail="Invalid token")
+
+
+def get_session() -> Session:
+    with Session() as session:
+        yield session
